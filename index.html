@@ -28,7 +28,7 @@ body {
     margin-right: auto;
 	padding: 10px;
     border: 5px;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
     display: none;
 }
@@ -49,10 +49,12 @@ body {
 				<input type="submit" class="btn btn-primary btn-md" value="Search">
 			</form>
 		</div>
-		<section>
-			<p id="demo"></p>
-		</section>		
-	</div>	
+		<div class="result">
+			<h3 id="demo"> </h3>
+		</div>	
+	</div>
+
+	
 
 	
 
@@ -82,7 +84,7 @@ body {
 				if (loc_parse['message']){
 					var msg = loc_parse['message'];
 					alert(msg);
-					$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
+					//$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
 				}
 				else {
@@ -98,13 +100,13 @@ body {
 					var img = new Image();
 					img.onload = function() {
 						div.appendChild(img);
-					};0
+					};
 					img.src = iconURL;
 					var location = city + ", " + cntry;
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
 					//alert("Current temperature in " + location + " is: " + temp + "°");
-					$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
+					$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
 					
 				}
