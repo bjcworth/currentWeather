@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
 body {
 	background-color: #b0c4de;
 }
-.parent {
+.container {
 	position: absolute;
 	top:0;
 	width: 100%;
@@ -37,20 +38,23 @@ body {
 </head>
 
 <body>
-	<div class = "parent" id="header">
+	<div class = "container" id="header">
 		<h1>Enter city name or zip to get its current weather conditions</h1>
 		<div class="child">
 			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
 				<div class="form-group">
 					<label for="inputdefault" style="font-size:150%;">Location:</label>
-					<input type="text" class="form-control" placeholder="(i.e. Boston,MA or 02215)" autofocus>
+					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)" autofocus>
 				</div>
 				<input type="submit" class="btn btn-primary btn-md" value="Search">
 			</form>
 		</div>
+		<section>
+			<p id="demo"></p>
+		</section>		
 	</div>	
 
-	<p id="demo"></p>
+	
 
 <script>
 	
@@ -60,6 +64,8 @@ body {
 	});
 	
 	$('#locSearch').submit(function(event) {
+		var div = document.getElementById('demo');
+		$(div).empty();
 		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
 		var units = "&units=imperial";
 		var formdata = document.getElementById('locSearch');
@@ -90,12 +96,14 @@ body {
 					}
 					iconURL += icon +".png";
 					var img = new Image();
-					var div = document.getElementById('demo');
-					//img.onload = function() {
-					//	div.appendChild(img);
-					//};
+					img.onload = function() {
+						div.appendChild(img);
+					};0
 					img.src = iconURL;
-					alert("Current temperature in " + city + ", " + cntry + " is: " + temp + "°");
+					var location = city + ", " + cntry;
+					$(div).append(location + ": ");
+					$(div).append(temp + "°");
+					//alert("Current temperature in " + location + " is: " + temp + "°");
 					$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
 					
