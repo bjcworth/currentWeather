@@ -78,9 +78,9 @@ body {
 					iconURL += icon +".png";
 					var img = new Image();
 					var div = document.getElementById('demo');
-					img.onload = function() {
-						div.appendChild(img);
-					};
+					//img.onload = function() {
+					//	div.appendChild(img);
+					//};
 					img.src = iconURL;
 					alert("Current temperature in " + city + ", " + cntry + " is: " + temp + "°");
 					$('#locSearch')[0].reset();
