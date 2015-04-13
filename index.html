@@ -6,8 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+	<!--<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>-->
 <style>
 body {
 	background-color: #b0c4de;
@@ -23,11 +24,11 @@ body {
 }
 #header, #locSearch {
 	margin-left: auto;
-    margin-right: auto;
+	margin-right: auto;
 	padding: 10px;
-    border: 5px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+	border: 5px;
+	margin-top: 10px;
+	margin-bottom: 20px;
 	display: none;	
 }
 
@@ -52,13 +53,13 @@ body {
 	<p id="demo"></p>
 
 <script>
+	var url = "http://api.openweathermap.org/data/2.5/weather?q=";
+	var units = "&units=imperial";
 	$(document).ready(function () {
-	   $('#header').fadeIn(2000);
-	   $('#locSearch').delay(1000).fadeIn(1500);
+	   $('#header').fadeIn(1500);
+	   $('#locSearch').delay(1000).slideDown("slow").fadeIn(2000);
 	});
 	$('#locSearch').submit(function(event) {
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
-		var units = "&units=imperial";
 		var formdata = document.getElementById('locSearch');
 		var loc = "";
 		var i;
@@ -91,7 +92,9 @@ body {
 					//};
 					img.src = iconURL;
 					alert("Current temperature in " + city + ", " + cntry + " is: " + temp + "°");
+					$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
+					
 				}
 			}
 		});
