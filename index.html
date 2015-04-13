@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Weather Page</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<style>
+body {
+	background-color: #b0c4de;
+}
+#header, #locSearch {
+	padding: 10px;
+    border: 5px;
+    margin: 10px;
+	display: none;
+}
+
+</style>
+
+</head>
+
+<body>
+	<div id="header">
+		<h1>Enter city name or zip to get its current weather conditions</h1>
+	</div>
+
+	<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
+		<div class="form-group">
+			<label for="inputdefault" style="font-size:150%;">Location:</label>
+			<input type="text" class="form-control" placeholder="(i.e. Boston,MA or 02215)" autofocus>
+		</div>
+		<input type="submit" class="btn btn-primary btn-md" value="Search">
+	</form>
+
+	<p id="demo"></p>
+
+
+
+
+<script>
+	$(document).ready(function () {
+	   $('#header').fadeIn(2000);
+	   $('#locSearch').delay(1000).fadeIn(1500);
+	});
+
+	$('#locSearch').submit(function(event) {
+		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
+		var units = "&units=imperial";
+		var formdata = document.getElementById('locSearch');
+		var loc = "";
+		var i;
+		for (i=0; i<formdata.length; formdata++) {
+			loc += formdata.elements[i].value;
+		}
+
+		//document.getElementById("demo").innerHTML = loc;
+		url += loc + units;
+		$.ajax({url: url,
+			dataType: "jsonp",
+			success: function(loc_parse){
+				if (loc_parse['message']){
+					var msg = loc_parse['message'];
+					alert(msg);
+				}
+				else {
+					var iconURL = "http://openweathermap.org/img/w/";
+					var icon = loc_parse['weather'][0]['icon'];
+					var city = loc_parse['name'];
+					var cntry = loc_parse['sys']['country'];
+					var temp = loc_parse['main']['temp'];
+					if (cntry=="United States of America") {
+						cntry="US";
+					}
+					iconURL += icon +".png";
+					var img = new Image();
+					var div = document.getElementById('demo');
+					img.onload = function() {
+						div.appendChild(img);
+					};
+					img.src = iconURL;
+					alert("Current temperature in " + city + ", " + cntry + " is: " + temp + "°");
+					$('#locSearch')[0].reset();
+				}
+			}
+
+		});
+	});
+</script>
+</body>
+</html>
