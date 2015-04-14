@@ -32,7 +32,9 @@ body {
     margin-bottom: 20px;
     display: none;
 }
+
 #demo {
+	display: none;
 	text-transform: capitalize;
 }
 
@@ -89,6 +91,7 @@ body {
 			loc += formdata.elements[i].value;
 		}
 		//document.getElementById("demo").innerHTML = loc;
+		loc = loc.charAt(0).toUpperCase() + loc.substr(1);
 		url += loc + units;
 		$.ajax({url: url,
 			dataType: "jsonp",
@@ -103,10 +106,10 @@ body {
 					var iconURL = "http://openweathermap.org/img/w/";
 					var icon = loc_parse['weather'][0]['icon'];
 					var city = loc_parse['name'];
-					var cntry = loc_parse['sys']['country'];
+					var country = loc_parse['sys']['country'];
 					var temp = Math.round(loc_parse['main']['temp']);
-					if (cntry=="United States of America") {
-						cntry="US";
+					if (country=="United States of America") {
+						country="US";
 					}
 					iconURL += icon +".png";
 					var img = new Image();
@@ -116,12 +119,14 @@ body {
 					img.src = iconURL;
 					var location;
 					if(city) {
-						location = city + ", " + cntry;
+						location = city + ", " + country;
 					}
-					else if (cntry) { location = loc + ", " + cntry;}
+					else if (loc == country) { location = country;}
+					else if ((loc != country) && !city) { location = loc + ", " + country;}
 					else { location = loc;}
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
+					$(div).fadeIn(1000);
 					//alert("Current temperature in " + location + " is: " + temp + "°");
 					$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
