@@ -33,6 +33,8 @@ body {
     display: none;
 }
 
+
+
 </style>
 
 </head>
@@ -92,7 +94,7 @@ body {
 					var icon = loc_parse['weather'][0]['icon'];
 					var city = loc_parse['name'];
 					var cntry = loc_parse['sys']['country'];
-					var temp = loc_parse['main']['temp'];
+					var temp = Math.round(loc_parse['main']['temp']);
 					if (cntry=="United States of America") {
 						cntry="US";
 					}
