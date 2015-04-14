@@ -82,6 +82,7 @@ body {
 	$('#locSearch').submit(function(event) {
 		var div = document.getElementById('demo');
 		$(div).empty();
+		$(div).hide();
 		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
 		var units = "&units=imperial";
 		var formdata = document.getElementById('locSearch');
@@ -126,7 +127,7 @@ body {
 					else { location = loc;}
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
-					$(div).fadeIn(1000);
+					$(div).fadeIn(500);
 					//alert("Current temperature in " + location + " is: " + temp + "°");
 					$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
