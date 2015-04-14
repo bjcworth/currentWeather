@@ -104,7 +104,11 @@ body {
 						div.appendChild(img);
 					};
 					img.src = iconURL;
-					var location = city + ", " + cntry;
+					var location;
+					if(city) {
+						location = city + ", " + cntry;
+					}
+					else { location = cntry;}
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
 					//alert("Current temperature in " + location + " is: " + temp + "°");
