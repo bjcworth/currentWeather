@@ -23,7 +23,7 @@ body {
 .child {
 	position: relative;
 }
-#header, #locSearch {
+.container, #locSearch {
 	margin-left: auto;
     margin-right: auto;
 	padding: 10px;
@@ -43,8 +43,8 @@ body {
 </head>
 
 <body>
-	<div class = "container" id="header">
-		<h1>Enter city name or zip to get the current temperature</h1>
+	<div class = "container">
+		<h1>Enter location name or zip for current weather</h1>
 		<div class="child">
 			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
 				<div class="form-group">
@@ -73,7 +73,7 @@ body {
 <script>
 	
 	$(document).ready(function () {
-	   $('#header').fadeIn(1500);
+	   $('.container').fadeIn(1500);
 	   $('#locSearch').delay(1000).slideDown("slow");
 	});
 	
@@ -96,7 +96,6 @@ body {
 				if (loc_parse['message']){
 					var msg = loc_parse['message'];
 					alert(msg);
-					//$('#locSearch').effect( "bounce", { times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
 				}
 				else {
@@ -119,7 +118,8 @@ body {
 					if(city) {
 						location = city + ", " + cntry;
 					}
-					else { location = loc + ", " + cntry;}
+					else if (cntry) { location = loc + ", " + cntry;}
+					else { location = loc;}
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
 					//alert("Current temperature in " + location + " is: " + temp + "°");
