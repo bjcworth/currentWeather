@@ -122,9 +122,9 @@ body {
 					if(city) {
 						location = city + ", " + country;
 					}
+					else if(!country) { location = loc;}
 					else if (loc == country) { location = country;}
-					else if ((loc != country) && !city) { location = loc + ", " + country;}
-					else { location = loc;}
+					else if ((loc != country) && !city) { location = loc + ", " + country;}	
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
 					$(div).fadeIn(500);
