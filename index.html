@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Weather Page</title>
+	<title>Current Weather</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -35,9 +35,9 @@ body {
 
 #demo {
 	display: none;
+	padding-left: 2%;
 	text-transform: capitalize;
 }
-
 
 
 </style>
@@ -45,15 +45,21 @@ body {
 </head>
 
 <body>
-	<div class = "container">
-		<h1>Enter location name or zip for current weather</h1>
+	<div class="container">
+		<h1>Enter location for current weather 
+			<span class="glyphicon glyphicon-cloud"></span>
+		</h1>   
 		<div class="child">
-			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
-				<div class="form-group">
-					<label for="inputdefault" style="font-size:150%;">Location:</label>
-					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)" autofocus>
+			<form class="form-inline" id="locSearch" role="form" action="#">
+				<div class="form-group" data-toggle="tooltip" data-placement="left" title="Any combo of city, state, country, continent or zip">
+					<span class="glyphicon glyphicon-globe" style="font-size:150%"></span>
+					<label for="inputdefault" style="font-size:150%">Location:</label>
+					
+					<input type="text" class="form-control" style="text-align: center" placeholder="(i.e. Boston, MA or 02215)" autofocus>
 				</div>
-				<input type="submit" class="btn btn-primary btn-md" value="Search">
+				<!--<input type="submit" class="btn btn-primary btn-md" value="Search">-->
+				<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-search"></span> Search
+				</button>
 			</form>
 		</div>
 		<div class="result">
@@ -73,11 +79,16 @@ body {
 	
 
 <script>
-	
+
 	$(document).ready(function () {
 	   $('.container').fadeIn(1500);
 	   $('#locSearch').delay(1000).slideDown("slow");
-	});
+	  // $('[data-toggle="tooltip"]').tooltip();
+	   });
+
+
+
+	
 	
 	$('#locSearch').submit(function(event) {
 		var div = document.getElementById('demo');
@@ -151,6 +162,7 @@ body {
 					//alert("Current temperature in " + location + " is: " + temp + "°");
 					$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
 					$('#locSearch')[0].reset();
+					$('input').focus();
 					
 				}
 			}
