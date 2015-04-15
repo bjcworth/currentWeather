@@ -119,12 +119,30 @@ body {
 					};
 					img.src = iconURL;
 					var location;
+					// city search
 					if(city) {
 						location = city + ", " + country;
 					}
+					// continent
 					else if(!country) { location = loc;}
+					// country search
 					else if (loc == country) { location = country;}
-					else if ((loc != country) && !city) { location = loc + ", " + country;}	
+					// state/province search
+					else if ((loc != country) && !city) { 
+						// if string contains country, just use the string
+						// bc we know the format is province, country
+						if ((loc.indexOf(country)>=0) ||(loc.indexOf(country.toLowerCase())>=0)) {
+							// full capitalization of country
+							if(loc.indexOf(country.toLowerCase())>=0) {
+								loc = loc.replace(country.toLowerCase(), country);
+							}
+							location = loc;
+						}
+						// otherwise, only a state/province was entered
+						else {
+							location = loc + ", " + country;
+						}
+					}	
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
 					$(div).fadeIn(500);
