@@ -92,7 +92,9 @@ body {
 			loc += formdata.elements[i].value;
 		}
 		//document.getElementById("demo").innerHTML = loc;
+		// upercase first letter
 		loc = loc.charAt(0).toUpperCase() + loc.substr(1);
+		loc = loc.trim();
 		url += loc + units;
 		$.ajax({url: url,
 			dataType: "jsonp",
