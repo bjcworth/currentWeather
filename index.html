@@ -6,10 +6,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">-->
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<!--<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>-->
 <style>
 body {
 	background-color: #b0c4de;
@@ -22,6 +22,21 @@ body {
 }
 .child {
 	position: relative;
+}
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
 }
 .container, #locSearch {
 	margin-left: auto;
@@ -38,22 +53,11 @@ body {
 	padding-left: 2%;
 	text-transform: capitalize;
 }
-
-::-webkit-input-placeholder {
-   text-align: center;
+#map {
+	display: none;
 }
 
-:-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
-}
 
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-}
-
-:-ms-input-placeholder {  
-   text-align: center; 
-}
 
 
 </style>
@@ -62,12 +66,12 @@ body {
 
 <body>
 	<div class="container">
-		<h1>Enter location for current weather 
+		<h1>Enter any location for current weather 
 			<span class="glyphicon glyphicon-cloud"></span>
 		</h1>   
 		<div class="child">
 			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
-				<div class="form-group" data-toggle="tooltip" data-placement="left" title="Any combo of city, state, country, continent or zip">
+				<div class="form-group" data-toggle="tooltip" data-placement="left" title="Any city, state, country, continent or zip">
 					<span class="glyphicon glyphicon-globe" style="font-size:150%"></span>
 					<label for="inputdefault" style="font-size:150%">Location:</label>
 					
@@ -81,13 +85,16 @@ body {
 		<div class="result">
 			<h3 id="demo"> </h3>
 		</div>
-			<!-- <iframe
-			  width="600"
-			  height="450"
+
+		<!--<div id="map">
+			<iframe
+			  width="400"
+			  height="400"
 			  frameborder="0" style="border:0"
-			  src="https://www.google.com/maps/embed/v1/place?key=API_KEY
+			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAsOpaHsm-Pct0oFWXUoyTwAS92JERYhQY
 			    &q=Space+Needle,Seattle+WA">
-			</iframe> -->
+			</iframe>
+		</div>-->
 	</div>
 
 	
@@ -107,6 +114,8 @@ body {
 	
 	
 	$('#locSearch').submit(function(event) {
+		// bounce search on submit
+		$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
 		var div = document.getElementById('demo');
 		$(div).empty();
 		$(div).hide();
@@ -118,9 +127,14 @@ body {
 		for (i=0; i<formdata.length; formdata++) {
 			loc += formdata.elements[i].value;
 		}
-		//document.getElementById("demo").innerHTML = loc;
+		// reset the form now that we've saved the data from it
+		$('#locSearch')[0].reset();
+		// reset focus to the form input
+		$('input').focus();
 		// upercase first letter
-		loc = loc.charAt(0).toUpperCase() + loc.substr(1);
+		//loc = loc.charAt(0).toUpperCase() + loc.substr(1);
+
+		// trim form entry of any extra whitespace
 		loc = loc.trim();
 		url += loc + units;
 		$.ajax({url: url,
@@ -152,7 +166,7 @@ body {
 					if(city) {
 						location = city + ", " + country;
 					}
-					// continent
+					// continent search
 					else if(!country) { location = loc;}
 					// country search
 					else if (loc == country) { location = country;}
@@ -174,11 +188,8 @@ body {
 					}	
 					$(div).append(location + ": ");
 					$(div).append(temp + "°");
+					// fade in weather result
 					$(div).fadeIn(500);
-					//alert("Current temperature in " + location + " is: " + temp + "°");
-					$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
-					$('#locSearch')[0].reset();
-					$('input').focus();
 					
 				}
 			}
