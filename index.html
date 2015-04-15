@@ -39,6 +39,22 @@ body {
 	text-transform: capitalize;
 }
 
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+
 
 </style>
 
@@ -55,7 +71,7 @@ body {
 					<span class="glyphicon glyphicon-globe" style="font-size:150%"></span>
 					<label for="inputdefault" style="font-size:150%">Location:</label>
 					
-					<input type="text" class="form-control" style="text-align: center" placeholder="(i.e. Boston, MA or 02215)" autofocus>
+					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)" autofocus>
 				</div>
 				<!--<input type="submit" class="btn btn-primary btn-md" value="Search">-->
 				<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-search"></span> Search
