@@ -141,6 +141,7 @@ body {
 			dataType: "jsonp",
 			success: function(loc_parse){
 				if (loc_parse['message']){
+					$('#spinner').hide();
 					var msg = loc_parse['message'];
 					alert(msg);
 					$('#locSearch')[0].reset();
