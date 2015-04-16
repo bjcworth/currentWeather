@@ -156,11 +156,11 @@ body {
 						country="US";
 					}
 					iconURL += icon +".png";
-					var img = new Image();
-					img.onload = function() {
-						div.appendChild(img);
-					};
-					img.src = iconURL;
+					// var img = new Image();
+					// img.onload = function() {
+					// 	div.appendChild(img);
+					// };
+					// img.src = iconURL;
 					var location;
 					// city search
 					if(city) {
@@ -185,9 +185,13 @@ body {
 						else {
 							location = loc + ", " + country;
 						}
-					}	
+					}
+					// add location to result
 					$(div).append(location + ": ");
+					// attach temp
 					$(div).append(temp + "°");
+					// attatch image
+					$(div).append($('<img>',{id:'locIcon',src:iconURL}));
 					// fade in weather result
 					$(div).fadeIn(500);
 					
