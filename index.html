@@ -194,7 +194,7 @@ body {
 						code = country.toLowerCase();
 						flagIcon = "\"flag-icon flag-icon-" + code + '"';
 						flagURL = '<span id=\"flag\"class='+flagIcon+'></span> ';
-						$(div).append(flagURL);
+						$(div).prepend(flagURL);
 					}
 					else {
 						$.ajax({
@@ -212,6 +212,7 @@ body {
 										flagIcon = "\"flag-icon flag-icon-" + code + '"';
 										flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
 										$(div).prepend(flagURL);
+										break;
 										
 									}
 								}
