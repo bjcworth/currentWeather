@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./css/flag-icon.css">
-	<link rel="stylesheet" href="./assets/docs.css">
+	<!--<link rel="stylesheet" href="./assets/docs.css">-->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -81,7 +81,6 @@ body {
 					
 					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)" autofocus>
 				</div>
-				<!--<input type="submit" class="btn btn-primary btn-md" value="Search">-->
 				<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-search"></span> Search
 				</button>
 			</form>
@@ -94,7 +93,6 @@ body {
 					<i class="fa fa-spinner fa-2x fa-pulse"></i>
 				</span>
 				<span id="demo">
-				<!-- <i class="fa fa-spinner fa-2x fa-pulse"></i> -->
 				</span>
 			</h3>
 		</div>
@@ -139,11 +137,6 @@ body {
 		}
 		// reset the form now that we've saved the data from it
 		$('#locSearch')[0].reset();
-		// reset focus to the form input
-		$('input').focus();
-		// upercase first letter
-		//loc = loc.charAt(0).toUpperCase() + loc.substr(1);
-
 		// trim form entry of any extra whitespace
 		loc = loc.trim();
 		url += loc + units;
@@ -168,11 +161,6 @@ body {
 						country="US";
 					}
 					iconURL += icon +".png";
-					// var img = new Image();
-					// img.onload = function() {
-					// 	div.appendChild(img);
-					// };
-					// img.src = iconURL;
 					var location;
 					// city search
 					if(city) {
@@ -201,14 +189,13 @@ body {
 					var code;
 					var flagIcon;
 					var flagURL;
+					var flagDIV;
 					// flag stuff
 					if (country.length==2) {
 						code = country.toLowerCase();
 						flagIcon = "\"flag-icon flag-icon-" + code + '"';
-						flagURL = '<span class='+flagIcon+'></span> '
+						flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
 						$(div).append(flagURL);
-						var b = flagIcon.replace(/"/g, '');
-						console.log(b);
 					}
 					else {
 						$.ajax({
@@ -217,36 +204,31 @@ body {
 							success: function(country_parse){
 								for(var i=0; i<country_parse.length; i++){
 									if(country_parse[i]['Name'] == country) {
-										//alert(country_parse[i]['Code']);
 										code = country_parse[i]['Code'].toLowerCase();
-										//alert(code);
 										flagIcon = "\"flag-icon flag-icon-" + code + '"';
-										flagURL = '<span class='+flagIcon+'></span> '
-										$(div).prepend(flagURL);
-										var b = flagIcon.replace(/"/g, '');
-										console.log(b);
+										flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
+										$(div).append(flagURL);
+										
 									}
 								}
 							}
 
 						});
 					}
-		 			
-					
-		 			// hide loading spinner, don't do anything til this is done
+		 			// hide loading spinner, don't do anything til this is document
 		 			$('#spinner').hide("fast", function () {
 			 				// add location to result
 						$(div).append(location + ": ");
 						// attach temp
 						$(div).append(temp + "°");
 						// attatch image
-						$(div).append($('<img>',{id:'locIcon',src:iconURL}));
+						$(div).append($('<img>',{id:'locIcon',src:iconURL,width:'50px',height:'50px'}));
 						// fade in weather result after loading weather icon
-						$('#locIcon').load(function() {
-							$(div).fadeIn(500);
-						});
+						$('#locIcon').load(function() { $(div).fadeIn(500);});
 
 		 			});
+
+		 			
 					
 					
 					
