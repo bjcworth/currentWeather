@@ -49,12 +49,19 @@ body {
     margin-bottom: 20px;
     display: none;
 }
+
 #demo {
-	padding-left: 4%;
 	text-transform: capitalize;
+	position: relative;
 }
 #spinner {
 	display: none;
+}
+.result {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
 }
 
 </style>
@@ -100,8 +107,10 @@ body {
 <script>
 
 	$(document).ready(function () {
-	   $('.container').fadeIn(1500);
-	   $('#locSearch').delay(1000).slideDown("slow");
+	   $('.container').fadeIn(1500, function(){
+	   		$('#locSearch').slideDown("slow");
+	   });
+	   
 	  // $('[data-toggle="tooltip"]').tooltip();
 	   });
 
@@ -111,16 +120,17 @@ body {
 	
 	$('#locSearch').submit(function(event) {
 		// bounce search on submit
-		$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow" );
+		$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow", function() {
+
+		} );
 		var div = document.getElementById('demo');
 		$(div).empty();
 		$(div).hide();
 		if($(div).css('display')=='none') {
 		 	$('#spinner').fadeIn(500);
-		 	console.log('we made it!');
 		}
 		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
-		var units = "&units=imperial";
+		var units = "&units=imperial&callback=locResults";
 		var formdata = document.getElementById('locSearch');
 		var loc = "";
 		var i;
@@ -138,8 +148,9 @@ body {
 		loc = loc.trim();
 		url += loc + units;
 		$.ajax({url: url,
-			dataType: "jsonp",
+				dataType: "jsonp",
 			success: function(loc_parse){
+				console.log("Succes!");
 				if (loc_parse['message']){
 					$('#spinner').hide();
 					var msg = loc_parse['message'];
@@ -190,33 +201,59 @@ body {
 					var code;
 					var flagIcon;
 					var flagURL;
-					// $.ajax({url: "http://data.okfn.org/data/core/country-list/r/data.json",
-					// 	dataType: "jsonp",
-					// 	success: function(country_parse){
-					// 		alert("yesh")}
-					// 	});
 					// flag stuff
 					if (country.length==2) {
-
 						code = country.toLowerCase();
 						flagIcon = "\"flag-icon flag-icon-" + code + '"';
 						flagURL = '<span class='+flagIcon+'></span> '
 						$(div).append(flagURL);
-		 			}
-		 			// hide loading spinner
-		 			$('#spinner').hide();
-					// add location to result
-					$(div).append(location + ": ");
-					// attach temp
-					$(div).append(temp + "°");
-					// attatch image
-					$(div).append($('<img>',{id:'locIcon',src:iconURL}));
-					// fade in weather result
-					$(div).fadeIn(500);
+						var b = flagIcon.replace(/"/g, '');
+						console.log(b);
+					}
+					else {
+						$.ajax({
+							url: "http://data.okfn.org/data/core/country-list/r/data.json",
+							dataType: "json",
+							success: function(country_parse){
+								for(var i=0; i<country_parse.length; i++){
+									if(country_parse[i]['Name'] == country) {
+										//alert(country_parse[i]['Code']);
+										code = country_parse[i]['Code'].toLowerCase();
+										//alert(code);
+										flagIcon = "\"flag-icon flag-icon-" + code + '"';
+										flagURL = '<span class='+flagIcon+'></span> '
+										$(div).prepend(flagURL);
+										var b = flagIcon.replace(/"/g, '');
+										console.log(b);
+									}
+								}
+							}
+
+						});
+					}
+		 			
+					
+		 			// hide loading spinner, don't do anything til this is done
+		 			$('#spinner').hide("fast", function () {
+			 				// add location to result
+						$(div).append(location + ": ");
+						// attach temp
+						$(div).append(temp + "°");
+						// attatch image
+						$(div).append($('<img>',{id:'locIcon',src:iconURL}));
+						// fade in weather result after loading weather icon
+						$('#locIcon').load(function() {
+							$(div).fadeIn(500);
+						});
+
+		 			});
+					
+					
 					
 				}
 			}
 		});
+		
 		
 	});
 </script>
