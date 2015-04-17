@@ -74,12 +74,12 @@ body {
 			<span class="glyphicon glyphicon-cloud"></span>
 		</h1>   
 		<div class="child">
-			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form initialized!');">
-				<div class="form-group" data-toggle="tooltip" data-placement="left" title="Any city, state, country, continent or zip">
+			<form class="form-inline" id="locSearch" role="form" action="javascript:console.log('Form submit...');">
+				<div class="form-group" data-toggle="tooltip" data-placement="left" data-container="body" title="Any city, state, country, continent or zip">
 					<span class="glyphicon glyphicon-globe" style="font-size:150%"></span>
 					<label for="inputdefault" style="font-size:150%">Location:</label>
 					
-					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)">
+					<input type="text" class="form-control" placeholder="(i.e. Boston, MA or 02215)" autofocus>
 				</div>
 				<button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-search"></span> Search
 				</button>
@@ -107,7 +107,7 @@ body {
 	$(document).ready(function () {
 	   $('.container').fadeIn(1500, function(){
 	   		$('#locSearch').slideDown("slow", function() {
-	   			$('[data-toggle="tooltip"]').tooltip();
+	   			//$('[data-toggle="tooltip"]').tooltip();
 	   		});
 	   });
 	   
@@ -145,7 +145,7 @@ body {
 		$.ajax({url: url,
 				dataType: "jsonp",
 			success: function(loc_parse){
-				console.log("Succes!");
+				console.log("Success!");
 				if (loc_parse['message']){
 					$('#spinner').hide();
 					var msg = loc_parse['message'];
