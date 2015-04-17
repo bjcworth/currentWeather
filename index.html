@@ -203,11 +203,11 @@ body {
 							dataType: "json",
 							success: function(country_parse){
 								for(var i=0; i<country_parse.length; i++){
-									if(country_parse[i]['Name'] == country) {
+									if(country_parse[i]['Name'].indexOf(country)>=0) {
 										code = country_parse[i]['Code'].toLowerCase();
 										flagIcon = "\"flag-icon flag-icon-" + code + '"';
 										flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
-										$(div).append(flagURL);
+										$(div).prepend(flagURL);
 										
 									}
 								}
