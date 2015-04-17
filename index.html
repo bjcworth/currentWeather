@@ -169,7 +169,7 @@ body {
 					// continent search
 					else if(!country) { location = loc;}
 					// country search
-					else if (loc == country) { location = country;}
+					else if ((loc == country)||(country.indexOf("Islands")>=0)) { location = country;}
 					// state/province search
 					else if ((loc != country) && !city) { 
 						// if string contains country, just use the string
@@ -189,12 +189,11 @@ body {
 					var code;
 					var flagIcon;
 					var flagURL;
-					var flagDIV;
 					// flag stuff
 					if (country.length==2) {
 						code = country.toLowerCase();
 						flagIcon = "\"flag-icon flag-icon-" + code + '"';
-						flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
+						flagURL = '<span id=\"flag\"class='+flagIcon+'></span> ';
 						$(div).append(flagURL);
 					}
 					else {
@@ -202,8 +201,13 @@ body {
 							url: "http://data.okfn.org/data/core/country-list/r/data.json",
 							dataType: "json",
 							success: function(country_parse){
+								//alert('old cntry: '+country);
+								if(country.indexOf('And')>=0){
+									country = country.replace("And","and");
+								}
 								for(var i=0; i<country_parse.length; i++){
 									if(country_parse[i]['Name'].indexOf(country)>=0) {
+										//alert(country);
 										code = country_parse[i]['Code'].toLowerCase();
 										flagIcon = "\"flag-icon flag-icon-" + code + '"';
 										flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
