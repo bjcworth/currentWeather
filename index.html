@@ -16,21 +16,11 @@
 body {
 	background-color: #b0c4de;
 }
-::-webkit-input-placeholder {
-   text-align: center;
-}
+::-webkit-input-placeholder {text-align: center;}
+:-moz-placeholder {  text-align: center;  /* Firefox 18- */}
+::-moz-placeholder { text-align: center;  /* Firefox 19+ */}
+:-ms-input-placeholder { text-align: center;}
 
-:-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-}
-
-:-ms-input-placeholder {  
-   text-align: center; 
-}
 .container {
 	position: absolute;
 	top:0;
@@ -111,12 +101,7 @@ body {
 	   		});
 	   });
 	   
-});
-
-
-
-
-	
+	});
 	
 	$('#locSearch').submit(function(event) {
 		// bounce search on submit
@@ -129,21 +114,30 @@ body {
 		if($(div).css('display')=='none') {
 		 	$('#spinner').fadeIn(500);
 		}
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=";
-		var units = "&units=imperial&callback=locResults";
 		var formdata = document.getElementById('locSearch');
-		var loc = "";
+		var loc="";
 		var i;
 		for (i=0; i<formdata.length; formdata++) {
 			loc += formdata.elements[i].value;
 		}
+		var url = "";
+		console.log("location entered: " + loc);
+		if (parseInt(loc, 10)) {
+    		console.log("location is zip")
+    		url = "http://api.openweathermap.org/data/2.5/weather?zip="; }
+		else {
+    		console.log("location is not a zip")
+			url = "http://api.openweathermap.org/data/2.5/weather?q="; }
+		var units = "&type=accurate&APPID=f630abe0a04975102eff5d756a6e6ef8&units=imperial";
 		// reset the form now that we've saved the data from it
 		$('#locSearch')[0].reset();
-		// trim form entry of any extra whitespace
+		// trim form entry of any extra whites pace
 		loc = loc.trim();
+		// Finish URL by apending location and units to the base URL
 		url += loc + units;
+		console.log("url: "+url);
 		$.ajax({url: url,
-				dataType: "jsonp",
+				dataType: "json",
 			success: function(loc_parse){
 				console.log("Success!");
 				if (loc_parse['message']){
@@ -165,9 +159,7 @@ body {
 					iconURL += icon +".png";
 					var location;
 					// city search
-					if(city) {
-						location = city + ", " + country;
-					}
+					if(city) { location = city + ", " + country;}
 					// continent search
 					else if(!country) { location = loc;}
 					// country search
