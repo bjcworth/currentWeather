@@ -13,9 +13,7 @@
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<style>
-			body {
-				background-color: #b0c4de;
-			}
+			body {background-color: #b0c4de;}
 			::-webkit-input-placeholder {text-align: center;}
 			:-moz-placeholder {  text-align: center;  /* Firefox 18- */}
 			::-moz-placeholder { text-align: center;  /* Firefox 19+ */}
@@ -27,9 +25,7 @@
 				width: 100%;
 				text-align: center;
 			}
-			.child {
-				position: relative;
-			}
+			.child {position: relative;}
 			.container, #locSearch {
 				margin-left: auto;
 			    margin-right: auto;
@@ -44,15 +40,15 @@
 				text-transform: capitalize;
 				position: relative;
 			}
-			#spinner {
-				display: none;
-			}
+			#spinner {display: none;}
 			.result {
 				text-align: center;
 				margin-left: auto;
 				margin-right: auto;
 				position: relative;
 			}
+			#temp {font-size: 40pt;}
+			#units {font-size: 30pt;}
 
 		</style>
 
@@ -76,14 +72,12 @@
 				</form>
 			</div>
 			<div class="result">
-
-				
-				<h3 id="res">
+				<div id="weather"> <span id='temp'> </span> <span id="units"></span></div>
+				<h3 id="res" style="margin-top: 0px;">
 					<span id="spinner">
 						<i class="fa fa-spinner fa-2x fa-pulse"></i>
 					</span>
-					<span id="demo">
-					</span>
+					<span id="demo"></span>
 				</h3>
 			</div>
 		</div>
@@ -113,13 +107,23 @@
 			$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow", function() {
 
 			} );
-			var div = document.getElementById('demo');
-			$(div).empty();
-			$(div).hide();
-			if($(div).css('display')=='none') {
+			// var resDiv = document.getElementsByClassName('result'[0]);
+			var div1 = document.getElementById('temp');
+			var div2 = document.getElementById('units');
+			var div3 = document.getElementById('demo');
+			// blank the old results to prep for new ones
+			$(div1).hide();
+			$(div2).hide();
+			$(div3).hide();
+			$(div1).empty();	
+			$(div2).empty();
+			$(div3).empty();
+			// show the spinner while we search
+			if($(div3).css('display')=='none') {
 			 	$('#spinner').fadeIn(500);
 			}
 			var formdata = document.getElementById('locSearch');
+			// variable storing entered location
 			var loc="";
 			var i;
 			// save form data to a variable
@@ -161,6 +165,7 @@
 							country="US";
 						}
 						iconURL += icon +".png";
+						// variable for location match
 						var location;
 						// city search
 						if(city) { location = city + ", " + country;}
@@ -192,7 +197,7 @@
 							code = country.toLowerCase();
 							flagIcon = "\"flag-icon flag-icon-" + code + '"';
 							flagURL = '<span id=\"flag\"class='+flagIcon+'></span> ';
-							$(div).prepend(flagURL);
+							$(div3).prepend(flagURL);
 						}
 						else {
 							$.ajax({
@@ -209,7 +214,7 @@
 											code = country_parse[i]['Code'].toLowerCase();
 											flagIcon = "\"flag-icon flag-icon-" + code + '"';
 											flagURL = '<span id=\"flag\"class='+flagIcon+'></span> '
-											$(div).prepend(flagURL);
+											$(div3).prepend(flagURL);
 											break;
 											
 										}
@@ -218,16 +223,22 @@
 
 							});
 						}
-			 			// hide loading spinner
+			 			// hide loading spinner and display result
 			 			$('#spinner').hide("fast", function () {
+			 				// add temp
+							$(div1).append(temp);
+							// add units
+							$(div2).append("<sup>°F</sup>");
 				 			// add location to result
-							$(div).append(location + ": ");
-							// attach temp
-							$(div).append(temp + "°");
-							// attatch image
-							$(div).append($('<img>',{id:'locIcon',src:iconURL,width:'50px',height:'50px'}));
+							$(div3).append(location);
+							// attatch weather image
+							$(div1).prepend($('<img>',{id:'locIcon',src:iconURL,width:'50px',height:'50px'}));
 							// fade in weather result after loading weather icon
-							$('#locIcon').load(function() { $(div).fadeIn(500);});
+							$('#locIcon').load(function() {
+								$(div1).fadeIn(450);
+								$(div2).fadeIn(450);
+								$(div3).fadeIn(480);
+							});
 
 			 			});
 
