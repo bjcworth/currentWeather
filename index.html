@@ -39,12 +39,10 @@
 			</div>
 			<div class="result">
 				<div id="weather"> <span id='temp'> </span> <span id="units"></span></div>
-				<h3 id="res" style="margin-top: 0px;">
-					<span id="spinner">
-						<i class="fa fa-spinner fa-2x fa-pulse"></i>
-					</span>
-					<span id="demo"></span>
+				<h3 id="loading" style="margin-top: 0px;">
+					<span id="spinner"><i class="fa fa-spinner fa-2x fa-pulse"></i></span>
 				</h3>
+				<h3 id="location"></h3>
 			</div>
 		</div>
 	</body>
@@ -76,7 +74,7 @@
 			// var resDiv = document.getElementsByClassName('result'[0]);
 			var div1 = document.getElementById('temp');
 			var div2 = document.getElementById('units');
-			var div3 = document.getElementById('demo');
+			var div3 = document.getElementById('location');
 			// blank the old results to prep for new ones
 			$(div1).hide();
 			$(div2).hide();
