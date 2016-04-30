@@ -16,6 +16,7 @@ $(document).ready(function () {
 		$("input").blur();
 		// bounce search on submit
 		$('.child').effect( "bounce", {distance: 10, times: 3 }, "slow", function() {} );
+		//$(".child" ).toggle( "bounce", { times: 3 }, "slow" );
 		// var resDiv = document.getElementsByClassName('result'[0]);
 		var div1 = document.getElementById('temp');
 		var div2 = document.getElementById('units');
